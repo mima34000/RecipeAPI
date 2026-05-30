@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using RecipeAPI.Models;
 
 namespace RecipeAPI.Data
@@ -16,6 +17,13 @@ namespace RecipeAPI.Data
         public DbSet<Ingredient> Ingredients { get; set; }
         public DbSet<FavoriteRecipe> FavoriteRecipes { get; set; }
 
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            // Suppress warning about dynamic values in seed data (BCrypt hash)
+            optionsBuilder.ConfigureWarnings(w =>
+                w.Ignore(RelationalEventId.PendingModelChangesWarning));
+        }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -32,6 +40,18 @@ namespace RecipeAPI.Data
                 .WithMany(r => r.FavoriteRecipes)
                 .HasForeignKey(f => f.RecipeId)
                 .OnDelete(DeleteBehavior.NoAction);
+
+            // Seed admin user so anyone who clones the repo has an admin account
+            modelBuilder.Entity<User>().HasData(
+                new User
+                {
+                    Id = 1,
+                    Username = "admin",
+                    Email = "admin@recipe.com",
+                    PasswordHash = BCrypt.Net.BCrypt.HashPassword("Admin123!"),
+                    Role = "Admin"
+                }
+            );
 
             // Seed some categories so the app has data from the start
             modelBuilder.Entity<Category>().HasData(
