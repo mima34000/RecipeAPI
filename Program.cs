@@ -2,12 +2,16 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using RecipeAPI.Data;
+using RecipeAPI.Services;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add controllers
 builder.Services.AddControllers();
+
+// Register services for dependency injection
+builder.Services.AddScoped<RecipeService>();
 
 // Connect to SQL Server database
 builder.Services.AddDbContext<AppDbContext>(options =>
