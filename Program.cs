@@ -12,6 +12,7 @@ builder.Services.AddControllers();
 
 // Register services for dependency injection
 builder.Services.AddScoped<RecipeService>();
+builder.Services.AddScoped<CategoryService>();
 
 // Connect to SQL Server database
 builder.Services.AddDbContext<AppDbContext>(options =>
