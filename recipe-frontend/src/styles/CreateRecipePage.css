@@ -1,0 +1,145 @@
+.create-recipe-page {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+.create-recipe-page h1 {
+  font-size: 32px;
+  font-weight: 700;
+  color: #2c2c2c;
+  margin-bottom: 8px;
+}
+
+.create-subtitle {
+  color: #666666;
+  font-size: 16px;
+  margin-bottom: 32px;
+}
+
+.create-form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.form-section {
+  background-color: #ffffff;
+  border-radius: 12px;
+  padding: 28px;
+  border: 1px solid #e0d6cc;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+}
+
+.form-section h2 {
+  font-size: 18px;
+  font-weight: 700;
+  color: #2c2c2c;
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid #f9f5f0;
+}
+
+.form-group {
+  margin-bottom: 16px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 600;
+  color: #2c2c2c;
+  font-size: 14px;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+  width: 100%;
+  padding: 12px 16px;
+  border: 2px solid #e0d6cc;
+  border-radius: 8px;
+  font-size: 15px;
+  color: #2c2c2c;
+  background-color: #ffffff;
+  transition: border-color 0.2s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+  border-color: #e8603c;
+  outline: none;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.ingredient-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr auto;
+  gap: 12px;
+  margin-bottom: 12px;
+  align-items: center;
+}
+
+.ingredient-row input {
+  padding: 10px 14px;
+  border: 2px solid #e0d6cc;
+  border-radius: 8px;
+  font-size: 14px;
+  color: #2c2c2c;
+  transition: border-color 0.2s ease;
+}
+
+.ingredient-row input:focus {
+  border-color: #e8603c;
+  outline: none;
+}
+
+.btn-remove {
+  background-color: #fee2e2;
+  color: #e74c3c;
+  border: none;
+  border-radius: 8px;
+  width: 36px;
+  height: 36px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.btn-remove:hover {
+  background-color: #fecaca;
+}
+
+.add-ingredient-btn {
+  margin-top: 8px;
+  font-size: 14px;
+  padding: 8px 16px;
+}
+
+.form-actions {
+  display: flex;
+  gap: 16px;
+  justify-content: flex-end;
+  padding-top: 8px;
+}
+
+@media (max-width: 600px) {
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .ingredient-row {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
+  }
+
+  .form-actions {
+    flex-direction: column;
+  }
+}
