@@ -91,6 +91,10 @@
   transition:
     transform 0.2s ease,
     box-shadow 0.2s ease;
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  cursor: pointer;
 }
 
 .feature-card:hover {

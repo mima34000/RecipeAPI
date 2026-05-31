@@ -37,27 +37,33 @@ function HomePage() {
       <section className="features">
         <h2 className="features-title">Why RecipeApp?</h2>
         <div className="features-grid">
-          <div className="feature-card">
+          <Link to="/recipes" className="feature-card">
             <div className="feature-icon">🔍</div>
             <h3>Browse Recipes</h3>
             <p>
               Explore hundreds of recipes across all categories — breakfast,
               lunch, dinner and more.
             </p>
-          </div>
-          <div className="feature-card">
+          </Link>
+          <Link
+            to={loggedIn ? "/favorites" : "/login"}
+            className="feature-card"
+          >
             <div className="feature-icon">❤️</div>
             <h3>Save Favorites</h3>
             <p>
               Create your personal collection by saving the recipes you love
               most.
             </p>
-          </div>
-          <div className="feature-card">
+          </Link>
+          <Link
+            to={loggedIn ? "/recipes/create" : "/register"}
+            className="feature-card"
+          >
             <div className="feature-icon">✍️</div>
             <h3>Share Your Recipes</h3>
             <p>Create and share your own recipes with the community.</p>
-          </div>
+          </Link>
         </div>
       </section>
 
