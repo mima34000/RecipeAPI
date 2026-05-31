@@ -64,7 +64,6 @@ namespace RecipeAPI.Services
             _context.Recipes.Add(recipe);
             await _context.SaveChangesAsync();
 
-            // Reload with related data
             return await GetByIdAsync(recipe.Id) ?? MapToDto(recipe);
         }
 
@@ -111,6 +110,7 @@ namespace RecipeAPI.Services
             return new RecipeDto
             {
                 Id = r.Id,
+                UserId = r.UserId,
                 Title = r.Title,
                 Description = r.Description,
                 Instructions = r.Instructions,
