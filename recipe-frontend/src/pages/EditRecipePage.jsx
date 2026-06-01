@@ -44,6 +44,7 @@ function EditRecipePage() {
         });
       } catch (err) {
         console.error("Failed to load recipe", err);
+        setError("Could not load recipe. Please try again.");
       }
     };
     fetchData();

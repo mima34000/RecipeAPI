@@ -10,6 +10,7 @@ function RecipeDetailPage() {
   const [recipe, setRecipe] = useState(null);
   const [loading, setLoading] = useState(true);
   const [message, setMessage] = useState("");
+  const [error, setError] = useState(null);
 
   const loggedIn = isLoggedIn();
   const role = getUserRole();
@@ -22,6 +23,7 @@ function RecipeDetailPage() {
         setRecipe(data);
       } catch (err) {
         console.error("Failed to load recipe", err);
+        setError("Could not load recipe. Please try again.");
       } finally {
         setLoading(false);
       }
@@ -31,18 +33,28 @@ function RecipeDetailPage() {
 
   const handleDelete = async () => {
     if (!window.confirm("Are you sure you want to delete this recipe?")) return;
-    const res = await deleteRecipe(id);
-    if (res.ok) {
-      navigate("/recipes");
+    try {
+      const res = await deleteRecipe(id);
+      if (res.ok) {
+        navigate("/recipes");
+      } else {
+        setError("Could not delete recipe. Please try again.");
+      }
+    } catch {
+      setError("Something went wrong. Please try again.");
     }
   };
 
   const handleFavorite = async () => {
-    const res = await addToFavorites(id);
-    if (res.ok) {
-      setMessage("Added to favorites! ❤️");
-    } else {
-      setMessage("Already in favorites!");
+    try {
+      const res = await addToFavorites(id);
+      if (res.ok) {
+        setMessage("Added to favorites! ❤️");
+      } else {
+        setMessage("Already in favorites!");
+      }
+    } catch {
+      setError("Could not add to favorites. Please try again.");
     }
   };
 
@@ -54,7 +66,8 @@ function RecipeDetailPage() {
 
   return (
     <div className="recipe-detail-page">
-      {/* Header */}
+      {error && <div className="error-message">{error}</div>}
+
       <div className="recipe-detail-header">
         <div className="recipe-detail-emoji">🍽️</div>
         <div className="recipe-detail-info">
@@ -69,7 +82,6 @@ function RecipeDetailPage() {
         </div>
       </div>
 
-      {/* Action Buttons */}
       <div className="recipe-actions">
         {loggedIn && (
           <button className="btn btn-primary" onClick={handleFavorite}>
@@ -89,13 +101,11 @@ function RecipeDetailPage() {
         {message && <span className="success-msg">{message}</span>}
       </div>
 
-      {/* Description */}
       <div className="recipe-section">
         <h2>Description</h2>
         <p>{recipe.description}</p>
       </div>
 
-      {/* Ingredients */}
       <div className="recipe-section">
         <h2>Ingredients</h2>
         {recipe.ingredients && recipe.ingredients.length > 0 ? (
@@ -114,7 +124,6 @@ function RecipeDetailPage() {
         )}
       </div>
 
-      {/* Instructions */}
       <div className="recipe-section">
         <h2>Instructions</h2>
         <p className="instructions-text">{recipe.instructions}</p>

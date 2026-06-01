@@ -8,6 +8,7 @@ function FavoritesPage() {
   const navigate = useNavigate();
   const [favorites, setFavorites] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null); // DODATO
 
   useEffect(() => {
     if (!isLoggedIn()) {
@@ -20,6 +21,7 @@ function FavoritesPage() {
         setFavorites(data);
       } catch (err) {
         console.error("Failed to load favorites", err);
+        setError("Could not load favorites. Please try again."); // DODATO
       } finally {
         setLoading(false);
       }
@@ -28,9 +30,17 @@ function FavoritesPage() {
   }, [navigate]);
 
   const handleRemove = async (recipeId) => {
-    const res = await removeFromFavorites(recipeId);
-    if (res.ok) {
-      setFavorites(favorites.filter((f) => f.id !== recipeId));
+    try {
+      // DODATO
+      const res = await removeFromFavorites(recipeId);
+      if (res.ok) {
+        setFavorites(favorites.filter((f) => f.id !== recipeId));
+      } else {
+        setError("Could not remove from favorites. Please try again.");
+      }
+    } catch {
+      // DODATO
+      setError("Something went wrong. Please try again.");
     }
   };
 
@@ -41,7 +51,7 @@ function FavoritesPage() {
       <div className="recipes-header">
         <h1>My Favorites ❤️</h1>
       </div>
-
+      {error && <div className="error-message">{error}</div>} {/* DODATO */}
       {favorites.length === 0 ? (
         <div className="no-recipes">
           <p>You have no favorite recipes yet!</p>

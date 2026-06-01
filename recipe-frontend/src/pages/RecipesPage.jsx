@@ -10,6 +10,7 @@ function RecipesPage() {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const loggedIn = isLoggedIn();
 
   useEffect(() => {
@@ -23,6 +24,7 @@ function RecipesPage() {
         setCategories(categoriesData);
       } catch (err) {
         console.error("Failed to load recipes", err);
+        setError("Could not load recipes. Please try again.");
       } finally {
         setLoading(false);
       }
@@ -30,7 +32,6 @@ function RecipesPage() {
     fetchData();
   }, []);
 
-  // Filter recipes by search and category
   const filtered = recipes.filter((r) => {
     const matchSearch = r.title.toLowerCase().includes(search.toLowerCase());
     const matchCategory =
@@ -51,7 +52,6 @@ function RecipesPage() {
         )}
       </div>
 
-      {/* Search and Filter */}
       <div className="recipes-filters">
         <input
           type="text"
@@ -74,7 +74,8 @@ function RecipesPage() {
         </select>
       </div>
 
-      {/* Recipes Grid */}
+      {error && <div className="error-message">{error}</div>}
+
       {filtered.length === 0 ? (
         <div className="no-recipes">
           <p>No recipes found. Try a different search! 🔍</p>
